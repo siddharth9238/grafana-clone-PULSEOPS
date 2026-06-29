@@ -1,0 +1,37 @@
+FROM node:24-alpine AS frontend
+
+WORKDIR /app
+
+COPY . .
+
+RUN corepack enable
+RUN yarn install --immutable
+RUN yarn build
+
+FROM golang:1.25-alpine AS backend
+
+WORKDIR /app
+
+COPY . .
+
+RUN apk add --no-cache git make bash
+
+RUN go mod download
+
+RUN make build-go GO_BUILD_TAGS=oss WIRE_TAGS=oss
+
+FROM alpine:3.21
+
+WORKDIR /usr/share/grafana
+
+RUN apk add --no-cache ca-certificates bash curl tzdata
+
+COPY --from=backend /app/bin/grafana ./bin/grafana
+COPY --from=frontend /app/public ./public
+COPY conf ./conf
+
+RUN mkdir -p data/plugins-bundled
+
+EXPOSE 3000
+
+CMD ["./bin/grafana","server","--homepath=."]
