@@ -1,0 +1,50 @@
+{
+  "name": "Blue Theme",
+  "id": "blue",
+  "colors": {
+    "mode": "dark",
+    "border": {
+      "weak": "rgba(0, 123, 255, 0.12)",
+      "medium": "rgba(0, 123, 255, 0.20)",
+      "strong": "rgba(0, 123, 255, 0.30)"
+    },
+    "text": {
+      "primary": "#E5E7EB",
+      "secondary": "rgba(229, 231, 235, 0.75)",
+      "disabled": "rgba(229, 231, 235, 0.5)",
+      "link": "#3B82F6",
+      "maxContrast": "#FFFFFF"
+    },
+    "primary": {
+      "main": "#3B82F6"
+    },
+    "secondary": {
+      "main": "#1E3A8A",
+      "text": "rgba(229, 231, 235, 0.75)",
+      "border": "rgba(0, 123, 255, 0.10)"
+    },
+    "background": {
+      "canvas": "#0a0e17",
+      "primary": "#111827",
+      "secondary": "#1f2937",
+      "elevated": "#1f2937"
+    },
+    "action": {
+      "hover": "rgba(59, 130, 246, 0.16)",
+      "selected": "rgba(59, 130, 246, 0.12)",
+      "selectedBorder": "#3B82F6",
+      "focus": "rgba(59, 130, 246, 0.16)",
+      "hoverOpacity": 0.08,
+      "disabledText": "rgba(229, 231, 235, 0.5)",
+      "disabledBackground": "rgba(59, 130, 246, 0.08)",
+      "disabledOpacity": 0.38
+    },
+    "gradients": {
+      "brandHorizontal": "linear-gradient(270deg, #3B82F6 0%, #60A5FA 100%)",
+      "brandVertical": "linear-gradient(0.01deg, #3B82F6 0.01%, #60A5FA 99.99%)"
+    },
+    "contrastThreshold": 3,
+    "hoverFactor": 0.05,
+    "tonalOffset": 0.2
+  }
+}

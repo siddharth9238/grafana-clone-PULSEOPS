@@ -1,0 +1,125 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "system-monitor-enterprise",
+    "title": "System Monitor",
+    "tags": ["enterprise", "monitoring", "system"],
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 1,
+    "refresh": "5s",
+    "panels": [
+      {
+        "id": 1,
+        "type": "timeseries",
+        "title": "CPU Usage",
+        "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
+        "datasource": "prometheus",
+        "targets": [{"expr": "100 - (rate(node_cpu_seconds_total{mode=\"idle\"}[5m]) * 100", "legendFormat": "CPU"}],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}, {"value": 70, "color": "orange"}, {"value": 90, "color": "red"}]}
+          }
+        }
+      },
+      {
+        "id": 2,
+        "type": "timeseries",
+        "title": "RAM Usage",
+        "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
+        "datasource": "prometheus",
+        "targets": [{"expr": "(1 - node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100", "legendFormat": "RAM"}],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}, {"value": 80, "color": "orange"}, {"value": 95, "color": "red"}]}
+          }
+        }
+      },
+      {
+        "id": 3,
+        "type": "gauge",
+        "title": "Disk Usage",
+        "gridPos": {"x": 12, "y": 0, "w": 3, "h": 4},
+        "datasource": "prometheus",
+        "targets": [{"expr": "100 - (node_filesystem_avail_bytes{mountpoint=\"/\"} / node_filesystem_size_bytes{mountpoint=\"/\"}) * 100"],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "thresholds": {"mode": "absolute", "steps": [{"value": null, "color": "green"}, {"value": 70, "color": "orange"}, {"value": 90, "color": "red"}]}
+          }
+        }
+      },
+      {
+        "id": 4,
+        "type": "stat",
+        "title": "Active Sessions",
+        "gridPos": {"x": 15, "y": 0, "w": 3, "h": 4},
+        "datasource": "prometheus",
+        "targets": [{"expr": "sum(grafana_session_active)"}],
+        "fieldConfig": {
+          "defaults": {"unit": "short"}
+        }
+      },
+      {
+        "id": 5,
+        "type": "timeseries",
+        "title": "Network Traffic",
+        "gridPos": {"x": 0, "y": 4, "w": 9, "h": 4},
+        "datasource": "prometheus",
+        "targets": [
+          {"expr": "rate(node_network_receive_bytes_total[5m])", "legendFormat": "RX"},
+          {"expr": "rate(node_network_transmit_bytes_total[5m])", "legendFormat": "TX"}
+        ],
+        "fieldConfig": {
+          "defaults": {"unit": "bytes"}
+        }
+      },
+      {
+        "id": 6,
+        "type": "barchart",
+        "title": "Database Usage",
+        "gridPos": {"x": 9, "y": 4, "w": 6, "h": 4},
+        "datasource": "prometheus",
+        "targets": [{"expr": "pg_database_size", "legendFormat": "Size"}],
+        "fieldConfig": {
+          "defaults": {"unit": "bytes"}
+        }
+      },
+      {
+        "id": 7,
+        "type": "timeseries",
+        "title": "API Response Time",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 4},
+        "datasource": "prometheus",
+        "targets": [{"expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) * 1000", "legendFormat": "p95"}],
+        "fieldConfig": {
+          "defaults": {"unit": "ms"}
+        }
+      },
+      {
+        "id": 8,
+        "type": "stat",
+        "title": "Uptime",
+        "gridPos": {"x": 12, "y": 8, "w": 3, "h": 2},
+        "datasource": "prometheus",
+        "targets": [{"expr": "(time() - grafana_build_info * 0) + 1209600", "legendFormat": "Uptime"}],
+        "fieldConfig": {
+          "defaults": {"unit": "s"}
+        }
+      },
+      {
+        "id": 9,
+        "type": "stat",
+        "title": "Temperature",
+        "gridPos": {"x": 15, "y": 8, "w": 3, "h": 2},
+        "datasource": "prometheus",
+        "targets": [{"expr": "node_hwmon_temp_celsius", "legendFormat": "Temp"}],
+        "fieldConfig": {
+          "defaults": {"unit": "celsius"}
+        }
+      }
+    ]
+  }
+}
