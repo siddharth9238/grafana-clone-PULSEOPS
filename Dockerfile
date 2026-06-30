@@ -89,7 +89,7 @@ COPY embed.go Makefile package.json ./
 COPY cue.mod cue.mod
 COPY kinds kinds
 COPY kindsv2 kindsv2
-COPY local local
+# COPY local local
 COPY packages/grafana-schema packages/grafana-schema
 COPY packages/grafana-data/src/themes/themeDefinitions packages/grafana-data/src/themes/themeDefinitions
 COPY public/app/plugins public/app/plugins
